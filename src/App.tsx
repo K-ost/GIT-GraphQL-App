@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react'
+import { useNavigate } from 'react-router'
+import Header from './components/Header'
+import Layout from './components/Layout'
+import Search from './components/Search'
 
 function App() {
+  const [login, setLogin] = useState<string>('K-ost')
+  const nav = useNavigate()
+  
+  // searchFunc
+  const searchFunc = (e: any, value: string) => {
+    e.preventDefault()
+    setLogin(value)
+    nav('/')
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+
+      <div className="container">
+        <Search handler={searchFunc} />
+        <Layout login={login} />
+      </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
